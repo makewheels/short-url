@@ -2,10 +2,12 @@ package com.eg.shorturl.bean.mapper;
 
 import com.eg.shorturl.bean.Url;
 import com.eg.shorturl.bean.UrlExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface UrlMapper {
     long countByExample(UrlExample example);
 

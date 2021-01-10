@@ -1,4 +1,4 @@
-package com.eg.demo;
+package com.eg.shorturl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

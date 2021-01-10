@@ -76,7 +76,8 @@ public class UrlService {
         //查询数据库，看这个id是否已经存在了，如果已经存在，重新生成
         do {
             shortId = RandomUtil.getRandomString(Constants.SHORT_ID_LENGTH);
-        } while (getUrlByShortId(shortId) == null);
+            System.out.println(shortId);
+        } while (getUrlByShortId(shortId) != null);
 
         //到这里说明找到了没有的新id，保存到数据库
         Url url = new Url();

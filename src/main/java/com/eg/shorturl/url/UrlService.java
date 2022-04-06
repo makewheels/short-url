@@ -1,6 +1,7 @@
 package com.eg.shorturl.url;
 
-import cn.hutool.core.util.IdUtil;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eg.shorturl.bean.Url;
 import com.eg.shorturl.bean.UrlExample;
@@ -88,6 +89,11 @@ public class UrlService {
         return urlList.get(0);
     }
 
+    private String getShortId() {
+        String json = HttpUtil.get("https://service-d5xe9zbh-1253319037.bj.apigw.tencentcs.com/release/");
+        return JSON.parseObject(json).getJSONObject("data").getString("prettyId");
+    }
+
     /**
      * 新增url
      *
@@ -110,7 +116,7 @@ public class UrlService {
         if (urlByFullUrl != null) return baseUrl + urlByFullUrl.getShortId();
 
         //生成随机id
-        String shortId = IdUtil.nanoId();
+        String shortId = getShortId();
 
         //到这里说明找到了没有的新id，保存到数据库
         Url url = new Url();

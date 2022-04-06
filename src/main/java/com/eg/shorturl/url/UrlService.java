@@ -1,7 +1,7 @@
 package com.eg.shorturl.url;
 
-import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.eg.shorturl.bean.Url;
 import com.eg.shorturl.bean.UrlExample;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -90,8 +91,16 @@ public class UrlService {
     }
 
     private String getShortId() {
-        String json = HttpUtil.get("https://service-d5xe9zbh-1253319037.bj.apigw.tencentcs.com/release/");
-        return JSON.parseObject(json).getJSONObject("data").getString("prettyId");
+//        String json = HttpUtil.get("https://service-d5xe9zbh-1253319037.bj.apigw.tencentcs.com/release/");
+//        return JSON.parseObject(json).getJSONObject("data").getString("prettyId");
+        File file = new File(FileUtil.getUserHomeDir(), "short-url-max-id.txt");
+        if (!file.exists()) {
+            FileUtil.writeUtf8String("0", file);
+        }
+        int maxId = Integer.parseInt(FileUtil.readUtf8String(file));
+        maxId += RandomUtil.randomInt(1, 11);
+        FileUtil.writeUtf8String(maxId + "", file);
+        return maxId + "";
     }
 
     /**

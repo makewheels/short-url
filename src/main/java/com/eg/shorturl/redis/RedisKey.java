@@ -5,11 +5,11 @@ package com.eg.shorturl.redis;
  * @Time 2021.01.30 13:00:45
  */
 public class RedisKey {
-    private static final String ROOT = "video-2022";
-    private static final String VIDEO = ROOT + ":video";
+    private static final String ROOT = "short-url";
+    private static final String SHORT_ID = ROOT + ":shortId";
 
-    public static String watchInfo(String watchId) {
-        return VIDEO + ":watchInfo:" + watchId;
+    public static String shortId(String shortId) {
+        return SHORT_ID + ":" + shortId;
     }
 
 }

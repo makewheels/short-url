@@ -1,13 +1,11 @@
 package com.eg.shorturl.url;
 
-import com.eg.shorturl.bean.Url;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author makewheels
@@ -21,23 +19,22 @@ public class UrlController {
     /**
      * 添加新的url
      *
-     * @param fullUrl
-     * @param sign
+     * @param request
      * @return
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     @ResponseBody
-    public String add(@RequestParam String fullUrl, @RequestParam String sign) {
-        return urlService.add(fullUrl, sign);
+    public String add(@RequestBody JSONObject request) {
+        return urlService.add(request);
     }
 
-    @RequestMapping("/{shortId}")
-    public String visit(@PathVariable("shortId") String shortId) {
-        //查询shortUrl
-        Url urlByShortUrl = urlService.getUrlByShortId(shortId);
-        if (urlByShortUrl == null) {
-            return null;
+    @GetMapping("/{shortId}")
+    public String visit(HttpServletResponse response, @PathVariable("shortId") String shortId) {
+        String url = urlService.getUrlFromRedis(shortId);
+        if (url == null) {
+            response.setStatus(404);
+            return shortId + " not exist";
         }
-        return "redirect:" + urlByShortUrl.getFullUrl();
+        return "redirect:" + url;
     }
 }

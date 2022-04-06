@@ -1,4 +1,4 @@
-package com.eg.shorturl;
+package com.eg.shorturl.etc;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,6 @@
-package com.eg.shorturl.controller;
+package com.eg.shorturl.url;
 
 import com.eg.shorturl.bean.Url;
-import com.eg.shorturl.service.UrlService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +22,13 @@ public class UrlController {
      * 添加新的url
      *
      * @param fullUrl
-     * @param timestamp
      * @param sign
      * @return
      */
     @RequestMapping("/add")
     @ResponseBody
-    public String add(@RequestParam String fullUrl, @RequestParam String timestamp,
-                      @RequestParam String sign) {
-        return urlService.add(fullUrl, timestamp, sign);
+    public String add(@RequestParam String fullUrl, @RequestParam String sign) {
+        return urlService.add(fullUrl, sign);
     }
 
     @RequestMapping("/{shortId}")

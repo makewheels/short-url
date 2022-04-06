@@ -1,5 +1,6 @@
-package com.eg.shorturl.service;
+package com.eg.shorturl.url;
 
+import cn.hutool.crypto.SecureUtil;
 import com.eg.shorturl.bean.Url;
 import com.eg.shorturl.bean.UrlExample;
 import com.eg.shorturl.bean.mapper.UrlMapper;
@@ -57,18 +58,20 @@ public class UrlService {
      * 新增url
      *
      * @param fullUrl
-     * @param timestamp
      * @param sign
      * @return
      */
-    public String add(String fullUrl, String timestamp, String sign) {
+    public String add(String fullUrl, String sign) {
         //签名校验
-
+        String key = System.getenv("short_url_add_sign_key");
+        if (!SecureUtil.md5(fullUrl + key).equals(sign)) {
+            return "签名校验错误";
+        }
         //根据fullUrl查询url
-        Url urlByfullUrl = getUrlByFullUrl(fullUrl);
+        Url urlByFullUrl = getUrlByFullUrl(fullUrl);
         //如果已经有了，则返回shortUrl
-        if (urlByfullUrl != null) {
-            return urlByfullUrl.getShortUrl();
+        if (urlByFullUrl != null) {
+            return urlByFullUrl.getShortUrl();
         }
 
         //生成随机id

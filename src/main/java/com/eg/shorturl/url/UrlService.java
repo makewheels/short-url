@@ -90,6 +90,29 @@ public class UrlService {
         return urlList.get(0);
     }
 
+    /**
+     * 将数字转为62进制。小端，个位数在前。
+     */
+    public static String NumberToText_SIXTWO_LE(int number) {
+        final char[] NumberToText_SIXTWO_ARR
+                = ("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz").toCharArray();
+        final int scale = 62;
+        StringBuilder sb = new StringBuilder(12);
+        boolean negative = number < 0;
+        if (negative) number = -number;
+        if (number < 0) return "8m85Y0n8LzA-";
+        //SU.Log("NumberToText_SIXTWO_LE", number, -(number+1));
+        long remainder;
+        while (number != 0) {
+            remainder = number % scale;
+            sb.append(NumberToText_SIXTWO_ARR[(int) remainder]);
+            number = number / scale;
+        }
+        if (negative) sb.append('-');
+        return sb.toString();
+    }
+
     private String getShortId() {
 //        String json = HttpUtil.get("https://service-d5xe9zbh-1253319037.bj.apigw.tencentcs.com/release/");
 //        return JSON.parseObject(json).getJSONObject("data").getString("prettyId");
@@ -100,7 +123,8 @@ public class UrlService {
         int maxId = Integer.parseInt(FileUtil.readUtf8String(file));
         maxId += RandomUtil.randomInt(1, 11);
         FileUtil.writeUtf8String(maxId + "", file);
-        return maxId + "";
+        //进制转换
+        return NumberToText_SIXTWO_LE(maxId);
     }
 
     /**

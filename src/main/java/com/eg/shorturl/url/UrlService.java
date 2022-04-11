@@ -2,10 +2,12 @@ package com.eg.shorturl.url;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eg.shorturl.bean.Url;
 import com.eg.shorturl.bean.UrlExample;
 import com.eg.shorturl.bean.mapper.UrlMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
  * @Time 2021.01.10 22:35:33
  */
 @Service
+@Slf4j
 public class UrlService {
     @Resource
     private UrlMapper urlMapper;
@@ -159,6 +162,8 @@ public class UrlService {
         url.setCreateTime(new Date());
         url.setVisitCount(0);
         urlMapper.insert(url);
+
+        log.info("新建url "+ JSON.toJSONString(url));
 
         //返回shortUrl
         return url.getShortUrl();

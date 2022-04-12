@@ -14,7 +14,6 @@ public class UrlRedisService {
     @Resource
     private RedisService redisService;
 
-
     public Url getUrl(String shortId) {
         String json = (String) redisService.get(RedisKey.shortId(shortId));
         return JSON.parseObject(json, Url.class);

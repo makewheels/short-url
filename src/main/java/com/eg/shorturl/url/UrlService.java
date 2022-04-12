@@ -98,14 +98,13 @@ public class UrlService {
      */
     public static String NumberToText_SIXTWO_LE(int number) {
         final char[] NumberToText_SIXTWO_ARR
-                = ("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                "abcdefghijklmnopqrstuvwxyz").toCharArray();
+                = ("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "abcdefghijklmnopqrstuvwxyz").toCharArray();
         final int scale = 62;
         StringBuilder sb = new StringBuilder(12);
         boolean negative = number < 0;
         if (negative) number = -number;
         if (number < 0) return "8m85Y0n8LzA-";
-        //SU.Log("NumberToText_SIXTWO_LE", number, -(number+1));
         long remainder;
         while (number != 0) {
             remainder = number % scale;
@@ -127,7 +126,8 @@ public class UrlService {
         maxId += RandomUtil.randomInt(1, 11);
         FileUtil.writeUtf8String(maxId + "", file);
         //进制转换
-        return NumberToText_SIXTWO_LE(maxId);
+//        return NumberToText_SIXTWO_LE(maxId);
+        return maxId + "";
     }
 
     /**
@@ -163,7 +163,7 @@ public class UrlService {
         url.setVisitCount(0);
         urlMapper.insert(url);
 
-        log.info("新建url "+ JSON.toJSONString(url));
+        log.info("新建url " + JSON.toJSONString(url));
 
         //返回shortUrl
         return url.getShortUrl();

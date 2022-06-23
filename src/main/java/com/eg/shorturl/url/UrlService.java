@@ -123,7 +123,7 @@ public class UrlService {
             FileUtil.writeUtf8String("0", file);
         }
         int maxId = Integer.parseInt(FileUtil.readUtf8String(file));
-        maxId += RandomUtil.randomInt(1, 11);
+        maxId += RandomUtil.randomInt(1, 12);
         FileUtil.writeUtf8String(maxId + "", file);
         //进制转换
 //        return NumberToText_SIXTWO_LE(maxId);

@@ -20,9 +20,9 @@ public class PasswordUtil {
     private static String getPrivateKey(String env) {
         String path = null;
         if (env.equals("dev")) {
-            path = "D:/workSpace/~keys/video-2022/privateKey.txt";
+            path = "D:/workSpace/~keys/short-url/privateKey.txt";
         } else if (env.equals("prod")) {
-            path = "/root/keys/video-2022/privateKey.txt";
+            path = "/root/keys/short-url/privateKey.txt";
         }
         return FileUtil.readUtf8String(path);
     }
